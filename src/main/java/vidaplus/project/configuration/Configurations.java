@@ -25,7 +25,7 @@ public class Configurations {
                     req.requestMatchers("/h2-console/**").permitAll();
 
                     //All other endpoints are authenticated
-                    req.anyRequest().authenticated();
+                    req.anyRequest().permitAll();
                 })
                 .build();
     }

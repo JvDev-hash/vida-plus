@@ -25,6 +25,7 @@ public class Profissional {
     private Date dataNascimento;
     private String especialidade;
     private String crm;
+    private String status;
     @ManyToOne
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
