@@ -9,7 +9,6 @@ import jakarta.persistence.Column;
 import java.util.Date;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 
 @Entity
 @Data
@@ -29,7 +28,4 @@ public class Profissional {
     @ManyToOne
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
-    @OneToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
 }

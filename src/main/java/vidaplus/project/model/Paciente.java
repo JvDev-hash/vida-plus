@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import java.util.Date;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Column;
 
 @Entity
@@ -39,7 +38,4 @@ public class Paciente {
     @ManyToOne
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
-    @OneToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario usuario;
 }
