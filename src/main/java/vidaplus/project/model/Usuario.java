@@ -24,7 +24,7 @@ public class Usuario {
     @Column(name = "senha", columnDefinition = "TEXT", nullable = false)
     private String senha;
     private String permissao;
-    private Boolean status;
+    private String status;
     private Date dataCriacao;
     private Date dataAtualizacao;
 }
