@@ -21,7 +21,7 @@ public class LoginService {
         var usuario = loginRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado com o email: " + email));
 
-        if(BCrypt.checkpw(password, usuario.getSenha())){
+        if(BCrypt.checkpw(password, usuario.getSenha()) && usuario.getStatus().equals("ATIVO")){
             return usuario;
         } else {
             return null;

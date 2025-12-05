@@ -2,6 +2,7 @@ package vidaplus.project.controller;
 
 import java.nio.charset.StandardCharsets;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class LoginController {
     }
     
     @PostMapping("/autenticar")
-    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO, HttpServletResponse response){
+    public ResponseEntity<?> login(@RequestBody LoginDTO loginDTO, HttpServletRequest request, HttpServletResponse response){
         try{
             var usuario = loginService.getByEmailAndPassword(loginDTO.getEmail(), loginDTO.getSenha());
 
@@ -40,7 +41,20 @@ public class LoginController {
 
             var tokenJWT = jwtTokenService.generateToken(usuario);
 
-            Cookie cookie = new Cookie("token", tokenJWT);
+            // Check if a cookie with the same name already exists and remove it
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie existingCookie : cookies) {
+                    if ("vptoken".equals(existingCookie.getName())) {
+                        existingCookie.setMaxAge(0);
+                        existingCookie.setPath("/");
+                        response.addCookie(existingCookie);
+                        break;
+                    }
+                }
+            }
+
+            Cookie cookie = new Cookie("vptoken", tokenJWT);
             cookie.setHttpOnly(true);
             cookie.setSecure(false);
             cookie.setPath("/");
