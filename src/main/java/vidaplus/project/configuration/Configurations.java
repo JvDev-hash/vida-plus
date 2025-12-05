@@ -41,6 +41,11 @@ public class Configurations {
                     req.requestMatchers(HttpMethod.POST, "/usuarios/**").permitAll();
                     req.requestMatchers(HttpMethod.PUT, "/usuarios/**").authenticated();
 
+                    //Endpoints de Pessoas
+                    req.requestMatchers(HttpMethod.GET,"/pessoas/**").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/pessoas/**").authenticated();
+                    req.requestMatchers(HttpMethod.PUT, "/pessoas/**").authenticated();
+
                     //Endpoints de Login
                     req.requestMatchers(HttpMethod.POST, "/login/**").permitAll();
                 })
