@@ -256,17 +256,21 @@ Cria um novo paciente no sistema.
 **Body:**
 ```json
 {
-  "nome": "João da Silva",
-  "cpf": "987.654.321-00",
-  "telefone": "(11) 91234-5678",
-  "email": "joao.paciente@email.com",
-  "dataNascimento": "1990-03-20",
-  "status": "ATIVO",
+  "nome": "João Silva",
+  "cpf": "123.456.789-00",
+  "telefone": "(11) 98765-4321",
+  "email": "joao.silva@email.com",
+  "dataNascimento": "1985-05-15",
+  "sexo": "Masculino",
+  "escolaridade": "Superior Completo",
+  "ocupacao": "Engenheiro",
   "endereco": {
-    "rua": "Avenida Exemplo",
-    "numero": "456",
+    "logradouro": "Rua das Flores",
+    "numero": 123,
+    "complemento": "Apto 45",
+    "bairro": "Centro",
     "cidade": "São Paulo",
-    "estado": "SP",
+    "uf": "SP",
     "cep": "01234-567"
   }
 }
@@ -337,7 +341,9 @@ Cria um novo leito no sistema.
 ```json
 {
   "numero": "101",
-  "tipo": "ENFERMARIA",
+  "descricao": "CAMA 15CM",
+  "tipo": "CAMA",
+  "alaMedica": "ENFERMARIA",
   "status": "DISPONIVEL"
 }
 ```
@@ -431,11 +437,12 @@ Cria um novo suprimento no sistema.
 **Body:**
 ```json
 {
-  "nome": "Seringa 5ml",
-  "descricao": "Seringa descartável de 5ml",
-  "quantidade": 100,
-  "unidadeMedida": "UNIDADE",
-  "categoria": "MATERIAL_MEDICO"
+  "nome": "Máscara Cirúrgica N95",
+  "descricao": "Máscara de proteção respiratória N95 para uso hospitalar",
+  "quantidade": 500,
+  "quantidadeMinima": 100,
+  "unidade": "Unidade",
+  "status": "disponivel"
 }
 ```
 
