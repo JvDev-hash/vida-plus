@@ -31,12 +31,14 @@ public class CustomTokenAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var headerCookies = request.getCookies();
-        if(headerCookies == null){
+
+        if(headerCookies == null || request.getRequestURI().startsWith("/h2-console") || request.getRequestURI().startsWith("/usuarios/cadastrar") 
+            || request.getRequestURI().startsWith("/login/autenticar")){
             filterChain.doFilter(request, response);
             return;
         }
         var tokenCookie = this.readCookie(request, "token")
-                .orElseThrow(() -> new EntityNotFoundException("There is no entity with this key"));
+                .orElseThrow(() -> new EntityNotFoundException("Cookie não encontrado"));
         var method = request.getMethod();
         var userPermission = this.getClaimFromToken(tokenCookie).get("permissao").asString();
 

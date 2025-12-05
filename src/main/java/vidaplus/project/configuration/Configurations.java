@@ -35,6 +35,14 @@ public class Configurations {
                     req.requestMatchers(HttpMethod.GET,"/leitos/**").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/leitos/**").authenticated();
                     req.requestMatchers(HttpMethod.PUT, "/leitos/**").authenticated();
+
+                    //Endpoints de Usuarios
+                    req.requestMatchers(HttpMethod.GET,"/usuarios/**").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/usuarios/**").permitAll();
+                    req.requestMatchers(HttpMethod.PUT, "/usuarios/**").authenticated();
+
+                    //Endpoints de Login
+                    req.requestMatchers(HttpMethod.POST, "/login/**").permitAll();
                 })
                 .addFilterBefore(customTokenAuthFilter, AuthenticationFilter.class)
                 .build();
