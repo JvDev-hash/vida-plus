@@ -1,7 +1,6 @@
 package vidaplus.project.init;
 
 import java.util.Date;
-import java.util.Optional;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCrypt;

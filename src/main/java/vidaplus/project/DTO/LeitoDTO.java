@@ -8,5 +8,5 @@ public class LeitoDTO {
     private String descricao;
     private String status;
     private String tipo;
-
+    private String alaMedica;
 }

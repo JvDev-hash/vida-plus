@@ -20,6 +20,7 @@ public class Leito {
     private String descricao;
     private String status;
     private String tipo;
+    private String alaMedica;
     @ManyToOne
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;

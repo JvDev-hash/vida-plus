@@ -27,6 +27,7 @@ public class LeitosService {
         leito.setDescricao(leitoDTO.getDescricao());
         leito.setStatus(leitoDTO.getStatus());
         leito.setTipo(leitoDTO.getTipo());
+        leito.setAlaMedica(leitoDTO.getAlaMedica());
         leitoRepository.save(leito);
     }
 
@@ -36,6 +37,7 @@ public class LeitosService {
         leito.setDescricao(leitoDTO.getDescricao());
         leito.setStatus(leitoDTO.getStatus());
         leito.setTipo(leitoDTO.getTipo());
+        leito.setAlaMedica(leitoDTO.getAlaMedica());
         leitoRepository.save(leito);
     }
 

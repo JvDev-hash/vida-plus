@@ -38,7 +38,7 @@ public class Configurations {
 
                     //Endpoints de Usuarios
                     req.requestMatchers(HttpMethod.GET,"/usuarios/**").permitAll();
-                    req.requestMatchers(HttpMethod.POST, "/usuarios/**").permitAll();
+                    req.requestMatchers(HttpMethod.POST, "/usuarios/**").authenticated();
                     req.requestMatchers(HttpMethod.PUT, "/usuarios/**").authenticated();
 
                     //Endpoints de Pessoas
