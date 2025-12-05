@@ -157,19 +157,21 @@ Cria um novo profissional no sistema.
 **Body:**
 ```json
 {
-  "nome": "Dr. Maria Santos",
+  "nome": "Dr. João Silva",
   "cpf": "123.456.789-00",
   "telefone": "(11) 98765-4321",
-  "email": "maria@vidaplus.com",
-  "dataNascimento": "1980-05-15",
+  "email": "joao.silva@email.com",
+  "dataNascimento": "1985-05-15T00:00:00.000Z",
   "especialidade": "Cardiologia",
-  "crm": "CRM123456",
+  "crm": "CRM-SP 123456",
   "status": "ATIVO",
   "endereco": {
-    "rua": "Rua Exemplo",
-    "numero": "123",
+    "logradouro": "Rua das Flores",
+    "numero": 123,
+    "complemento": "Apto 45",
+    "bairro": "Centro",
     "cidade": "São Paulo",
-    "estado": "SP",
+    "uf": "SP",
     "cep": "01234-567"
   }
 }
