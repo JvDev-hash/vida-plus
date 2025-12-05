@@ -24,17 +24,9 @@ public class Paciente {
     private String email;
     private Date dataNascimento;
     private String sexo;
-    private String estadoCivil;
-    private String profissao;
-    private String naturalidade;
-    private String alergias;
-    private String medicacoes;
-    private String historicoMedico;
-    private String responsavelNome;
-    private String responsavelTelefone;
-    private String responsavelEmail;
-    private String responsavelCpf;
-    private String responsavelParentesco;
+    private String escolaridade;
+    private String ocupacao;
+
     @ManyToOne
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import vidaplus.project.DTO.PacienteDTO;
 import vidaplus.project.DTO.ProfissionalDTO;
 import java.nio.charset.StandardCharsets;
 
@@ -79,6 +80,43 @@ public class PessoasController {
             } else {
                 return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
             }
+        }
+    }
+
+    @PostMapping("/paciente")
+    public ResponseEntity<?> cadastrarPaciente(@RequestBody PacienteDTO pacienteDTO) {
+        try {
+            pessoasService.cadastrarPaciente(pacienteDTO);
+            return new ResponseEntity<>("Paciente cadastrado com sucesso!", HttpStatus.CREATED);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/paciente/{id}")
+    public ResponseEntity<?> editarPaciente(@PathVariable Long id, @RequestBody PacienteDTO pacienteDTO) {
+        try {
+            pessoasService.editarPaciente(id, pacienteDTO);
+            return new ResponseEntity<>("Paciente atualizado com sucesso!", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            if (e.getClass().getName().equals("jakarta.persistence.EntityNotFoundException")) {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+
+    @GetMapping("/paciente")
+    public ResponseEntity<?> listarPacientes(@RequestParam(defaultValue = "0") int pageNo, @RequestParam(defaultValue = "10") int pageSize) {
+        try {
+            var pacientes = pessoasService.listarPacientes(pageNo, pageSize);
+            return new ResponseEntity<>(pacientes, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     

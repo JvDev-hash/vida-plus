@@ -22,9 +22,9 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         
-        Optional<Usuario> existingUsuario = loginRepository.findByEmail("admin@vidaplus.com");
+        var usuario = loginRepository.findByEmail("admin@vidaplus.com");
 
-        if (existingUsuario.isEmpty()) {
+        if (usuario.isEmpty()) {
             Usuario adminUsuario = new Usuario();
             adminUsuario.setNome("Administrador");
             adminUsuario.setEmail("admin@vidaplus.com");

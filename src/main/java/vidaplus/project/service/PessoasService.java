@@ -13,16 +13,24 @@ import org.springframework.stereotype.Service;
 import jakarta.persistence.EntityNotFoundException;
 import vidaplus.project.repository.ProfissionalRepository;
 import vidaplus.project.repository.EnderecoRepository;
+import vidaplus.project.repository.PacienteRepository;
+import vidaplus.project.DTO.PacienteDTO;
+import vidaplus.project.model.Paciente;
 
 @Service
 public class PessoasService {
 
     private final ProfissionalRepository profissionalRepository;
     private final EnderecoRepository enderecoRepository;
-    public PessoasService(ProfissionalRepository profissionalRepository, EnderecoRepository enderecoRepository) {
+    private final PacienteRepository pacienteRepository;
+
+    public PessoasService(ProfissionalRepository profissionalRepository, EnderecoRepository enderecoRepository, PacienteRepository pacienteRepository) {
         this.profissionalRepository = profissionalRepository;
         this.enderecoRepository = enderecoRepository;
+        this.pacienteRepository = pacienteRepository;
     }
+
+    // Profissionais
 
     public void cadastrarProfissional(ProfissionalDTO profissionalDTO) {
         var profissional = new Profissional();
@@ -87,4 +95,64 @@ public class PessoasService {
         Page<Profissional> profissionais = profissionalRepository.findAll(pageable);
         return new PageImpl<>(profissionais.getContent(), pageable, profissionais.getTotalElements());
     }
+
+    // Pacientes
+
+    public void cadastrarPaciente(PacienteDTO pacienteDTO) {
+        var paciente = new Paciente();
+        paciente.setNome(pacienteDTO.getNome());
+        paciente.setCpf(pacienteDTO.getCpf());
+        paciente.setTelefone(pacienteDTO.getTelefone());
+        paciente.setEmail(pacienteDTO.getEmail());
+        paciente.setDataNascimento(pacienteDTO.getDataNascimento());
+        paciente.setSexo(pacienteDTO.getSexo());
+        paciente.setEscolaridade(pacienteDTO.getEscolaridade());
+        paciente.setOcupacao(pacienteDTO.getOcupacao());
+
+        var endereco = new Endereco();
+        endereco.setLogradouro(pacienteDTO.getEndereco().getLogradouro());
+        endereco.setNumero(pacienteDTO.getEndereco().getNumero());
+        endereco.setComplemento(pacienteDTO.getEndereco().getComplemento());
+        endereco.setBairro(pacienteDTO.getEndereco().getBairro());
+        endereco.setCidade(pacienteDTO.getEndereco().getCidade());
+        endereco.setUf(pacienteDTO.getEndereco().getUf());
+        endereco.setCep(pacienteDTO.getEndereco().getCep());
+
+        paciente.setEndereco(enderecoRepository.save(endereco));
+
+        pacienteRepository.save(paciente);
+    }
+    
+    public void editarPaciente(Long id, PacienteDTO pacienteDTO) {
+        var paciente = pacienteRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado"));
+        paciente.setNome(pacienteDTO.getNome());
+        paciente.setCpf(pacienteDTO.getCpf());
+        paciente.setTelefone(pacienteDTO.getTelefone());
+        paciente.setEmail(pacienteDTO.getEmail());
+        paciente.setDataNascimento(pacienteDTO.getDataNascimento());
+        paciente.setSexo(pacienteDTO.getSexo());
+        paciente.setEscolaridade(pacienteDTO.getEscolaridade());
+        paciente.setOcupacao(pacienteDTO.getOcupacao());
+
+        var endereco = new Endereco();
+        endereco.setLogradouro(pacienteDTO.getEndereco().getLogradouro());
+        endereco.setNumero(pacienteDTO.getEndereco().getNumero());
+        endereco.setComplemento(pacienteDTO.getEndereco().getComplemento());
+        endereco.setBairro(pacienteDTO.getEndereco().getBairro());
+        endereco.setCidade(pacienteDTO.getEndereco().getCidade());
+        endereco.setUf(pacienteDTO.getEndereco().getUf());
+        endereco.setCep(pacienteDTO.getEndereco().getCep());
+
+        paciente.setEndereco(enderecoRepository.save(endereco));
+
+        pacienteRepository.save(paciente);
+    }
+    
+    public Page<Paciente> listarPacientes(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, "pacienteId"));
+        Page<Paciente> pacientes = pacienteRepository.findAll(pageable);
+        return new PageImpl<>(pacientes.getContent(), pageable, pacientes.getTotalElements());
+    }
+    
 }
