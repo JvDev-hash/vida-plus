@@ -815,3 +815,66 @@ Retorna uma lista paginada de prontuários cadastrados.
 
 **Respostas de Erro:**
 - `500 INTERNAL_SERVER_ERROR`: Erro ao listar prontuários
+
+#### Buscar Prontuário por ID
+
+Retorna os dados de um prontuário específico.
+
+**Endpoint:** `GET /prontuario/listar/{prontuarioId}`
+
+**Autenticação:** Não requerida
+
+**Path Parameters:**
+- `prontuarioId`: ID do prontuário
+
+**Resposta de Sucesso (200 OK):**
+```json
+{
+  "numeroProntuario": "PRT-2024-0001",
+  "dataAdmissao": "2024-01-15T10:00:00.000Z",
+  "motivoAdmissao": "Dor abdominal intensa",
+  "diagnostico": "Apendicite aguda",
+  "historicoMedico": "Paciente sem histórico de cirurgias",
+  "evolucao": "Paciente em observação",
+  "encaminhamento": "Aguardando avaliação cirúrgica",
+  "conduta": "Repouso e medicação analgésica",
+  "dataInternacao": "2024-01-15T14:00:00.000Z",
+  "dataAlta": null,
+  "motivoInternacao": "Necessidade de cirurgia",
+  "motivoAlta": null,
+  "dataObito": null,
+  "causaObito": null,
+  "leito": {
+    "id": 5,
+    "numero": "101",
+    "descricao": "CAMA 15CM",
+    "tipo": "CAMA",
+    "alaMedica": "ENFERMARIA",
+    "status": "OCUPADO"
+  },
+  "paciente": {
+    "nome": "João Silva",
+    "cpf": "123.456.789-00",
+    "telefone": "(11) 98765-4321",
+    "email": "joao.silva@email.com",
+    "dataNascimento": "1985-05-15T00:00:00.000Z",
+    "sexo": "Masculino",
+    "escolaridade": "Superior Completo",
+    "ocupacao": "Engenheiro"
+  },
+  "profissional": {
+    "nome": "Dr. João Silva",
+    "cpf": "123.456.789-00",
+    "telefone": "(11) 98765-4321",
+    "email": "joao.silva@email.com",
+    "dataNascimento": "1985-05-15T00:00:00.000Z",
+    "especialidade": "Cardiologia",
+    "crm": "CRM-SP 123456",
+    "status": "ATIVO"
+  }
+}
+```
+
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Prontuário não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro ao buscar prontuário

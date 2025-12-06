@@ -129,5 +129,20 @@ public class ProntuarioController {
             return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/listar/{prontuarioId}")
+    public ResponseEntity<?> listarProntuario(@PathVariable Long prontuarioId) {
+        try{
+            var prontuario = prontuarioService.buscarProntuarioPorId(prontuarioId);
+            return new ResponseEntity<>(prontuario, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            if (e.getClass().getName().equals("jakarta.persistence.EntityNotFoundException")) {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
     
 }

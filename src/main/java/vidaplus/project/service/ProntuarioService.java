@@ -147,6 +147,31 @@ public class ProntuarioService {
         );
     }
 
+    public ProntuarioResponseDTO buscarProntuarioPorId(Long prontuarioId) {
+        var prontuario = prontuarioRepository.findById(prontuarioId).orElseThrow(() -> new EntityNotFoundException("Prontuario não encontrado"));
+        PacienteResponseDTO pacienteDTO = mapToPacienteResponseDTO(prontuario.getPaciente());
+        ProfissionalResponseDTO profissionalDTO = mapToProfissionalResponseDTO(prontuario.getProfissional());
+        return new ProntuarioResponseDTO(
+            prontuario.getNumeroProntuario(),
+            prontuario.getDataAdmissao(),
+            prontuario.getMotivoAdmissao(),
+            prontuario.getDiagnostico(),
+            prontuario.getHistoricoMedico(),
+            prontuario.getEvolucao(),
+            prontuario.getEncaminhamento(),
+            prontuario.getConduta(),
+            prontuario.getDataInternacao(),
+            prontuario.getDataAlta(),
+            prontuario.getMotivoInternacao(),
+            prontuario.getMotivoAlta(),
+            prontuario.getDataObito(),
+            prontuario.getCausaObito(),
+            prontuario.getLeito(),
+            pacienteDTO,
+            profissionalDTO
+        );
+    }
+
     private PacienteResponseDTO mapToPacienteResponseDTO(Paciente paciente) {
         return new PacienteResponseDTO(
             paciente.getNome(),
@@ -172,4 +197,6 @@ public class ProntuarioService {
             profissional.getStatus()
         );
     }
+
+
 }
