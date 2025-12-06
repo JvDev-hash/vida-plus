@@ -6,8 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
 
 @Entity
 @Data
@@ -21,7 +19,4 @@ public class Leito {
     private String status;
     private String tipo;
     private String alaMedica;
-    @ManyToOne
-    @JoinColumn(name = "paciente_id")
-    private Paciente paciente;
 }
