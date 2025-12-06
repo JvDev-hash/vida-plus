@@ -1,7 +1,6 @@
 package vidaplus.project.controller;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import vidaplus.project.DTO.InternacaoPacienteDTO;
+import vidaplus.project.DTO.AltaPacienteDTO;
+import vidaplus.project.DTO.ObitoPacienteDTO;
 import vidaplus.project.DTO.ProntuarioDTO;
 import vidaplus.project.service.ProntuarioService;
 
@@ -43,9 +45,9 @@ public class ProntuarioController {
     }
 
     @PutMapping("/internacao/{prontuarioId}")
-    public ResponseEntity<?> internacaoPaciente(@PathVariable Long prontuarioId, @RequestBody String motivoInternacao, @RequestBody Long leitoId) {
+    public ResponseEntity<?> internacaoPaciente(@PathVariable Long prontuarioId, @RequestBody InternacaoPacienteDTO internacaoPacienteDTO) {
         try{
-            prontuarioService.internacaoPaciente(prontuarioId, motivoInternacao, new Date(), leitoId);
+            prontuarioService.internacaoPaciente(prontuarioId, internacaoPacienteDTO.getMotivoInternacao(), internacaoPacienteDTO.getDataInternacao(), internacaoPacienteDTO.getLeitoId());
             return new ResponseEntity<>("Paciente internado com sucesso!", HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -73,9 +75,9 @@ public class ProntuarioController {
     }
 
     @PutMapping("/alta/{prontuarioId}")
-    public ResponseEntity<?> altaPaciente(@PathVariable Long prontuarioId, @RequestBody Date dataAlta, String motivoAlta) {
+    public ResponseEntity<?> altaPaciente(@PathVariable Long prontuarioId, @RequestBody AltaPacienteDTO altaPacienteDTO) {
         try{
-            prontuarioService.altaPaciente(prontuarioId, motivoAlta, dataAlta);
+            prontuarioService.altaPaciente(prontuarioId, altaPacienteDTO.getMotivoAlta(), altaPacienteDTO.getDataAlta());
             return new ResponseEntity<>("Paciente dado de alta com sucesso!", HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -88,9 +90,9 @@ public class ProntuarioController {
     }
 
     @PutMapping("/obito/{prontuarioId}")
-    public ResponseEntity<?> obitoPaciente(@PathVariable Long prontuarioId, @RequestBody Date dataObito, String causaObito) {
+    public ResponseEntity<?> obitoPaciente(@PathVariable Long prontuarioId, @RequestBody ObitoPacienteDTO obitoPacienteDTO) {
         try{
-            prontuarioService.altaPaciente(prontuarioId, causaObito, dataObito);
+            prontuarioService.obitoPaciente(prontuarioId, obitoPacienteDTO.getCausaObito(), obitoPacienteDTO.getDataObito());
             return new ResponseEntity<>("Registro de óbito realizado com sucesso!", HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
