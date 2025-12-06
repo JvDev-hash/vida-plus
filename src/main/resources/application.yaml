@@ -39,9 +39,3 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true
-
-#apiTitle: "Manager Service"
-#apiDescription: "Serviço de Gerenciamento do projeto Usercard manager"
-#apiVersion: "1.0.0"
-#apiContactName: "João Victor Barbosa"
-#apiContactEmail: "jvbaprof@gmail.com"
