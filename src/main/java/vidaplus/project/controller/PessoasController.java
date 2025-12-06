@@ -52,6 +52,20 @@ public class PessoasController {
             return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/profissional/{id}")
+    public ResponseEntity<?> buscarProfissionalPorId(@PathVariable Long id) {
+        try{
+            var profissional = pessoasService.buscarProfissionalPorId(id);
+            return new ResponseEntity<>(profissional, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            if (e.getClass().getName().equals("jakarta.persistence.EntityNotFoundException")) {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
 
     @PutMapping("/profissional/{id}")
     public ResponseEntity<?> editarProfissional(@PathVariable Long id, @RequestBody ProfissionalDTO profissionalDTO) {

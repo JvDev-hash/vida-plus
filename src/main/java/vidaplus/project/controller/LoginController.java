@@ -15,7 +15,7 @@ import jakarta.servlet.http.Cookie;
 import vidaplus.project.service.LoginService;
 import vidaplus.project.service.JwtTokenService;
 import vidaplus.project.DTO.LoginDTO;
-import vidaplus.project.DTO.LoginResponseDTO;
+import vidaplus.project.DTO.ResponseDTO.LoginResponseDTO;
 
 @RestController
 @RequestMapping("/login")

@@ -1,4 +1,4 @@
-package vidaplus.project.DTO;
+package vidaplus.project.DTO.ResponseDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

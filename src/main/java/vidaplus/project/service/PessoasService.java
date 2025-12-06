@@ -1,7 +1,8 @@
 package vidaplus.project.service;
 
 import vidaplus.project.DTO.ProfissionalDTO;
-import vidaplus.project.DTO.ProfissionalResponseDTO;
+import vidaplus.project.DTO.ResponseDTO.PacienteResponseDTO;
+import vidaplus.project.DTO.ResponseDTO.ProfissionalResponseDTO;
 import vidaplus.project.model.Endereco;
 import vidaplus.project.model.Profissional;
 
@@ -18,7 +19,6 @@ import vidaplus.project.repository.ProfissionalRepository;
 import vidaplus.project.repository.EnderecoRepository;
 import vidaplus.project.repository.PacienteRepository;
 import vidaplus.project.DTO.PacienteDTO;
-import vidaplus.project.DTO.PacienteResponseDTO;
 import vidaplus.project.model.Paciente;
 
 @Service

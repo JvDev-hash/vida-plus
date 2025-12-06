@@ -43,9 +43,9 @@ public class ProntuarioController {
     }
 
     @PutMapping("/internacao/{prontuarioId}")
-    public ResponseEntity<?> internacaoPaciente(@PathVariable Long prontuarioId, @RequestBody Date dataInternacao, @RequestBody String motivoInternacao, @RequestBody Long leitoId) {
+    public ResponseEntity<?> internacaoPaciente(@PathVariable Long prontuarioId, @RequestBody String motivoInternacao, @RequestBody Long leitoId) {
         try{
-            prontuarioService.internacaoPaciente(prontuarioId, motivoInternacao, dataInternacao, leitoId);
+            prontuarioService.internacaoPaciente(prontuarioId, motivoInternacao, new Date(), leitoId);
             return new ResponseEntity<>("Paciente internado com sucesso!", HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -73,7 +73,7 @@ public class ProntuarioController {
     }
 
     @PutMapping("/alta/{prontuarioId}")
-    public ResponseEntity<?> altaPaciente(@PathVariable Long prontuarioId, @RequestBody Date dataAlta, @RequestBody String motivoAlta) {
+    public ResponseEntity<?> altaPaciente(@PathVariable Long prontuarioId, @RequestBody Date dataAlta, String motivoAlta) {
         try{
             prontuarioService.altaPaciente(prontuarioId, motivoAlta, dataAlta);
             return new ResponseEntity<>("Paciente dado de alta com sucesso!", HttpStatus.OK);
@@ -88,7 +88,7 @@ public class ProntuarioController {
     }
 
     @PutMapping("/obito/{prontuarioId}")
-    public ResponseEntity<?> obitoPaciente(@PathVariable Long prontuarioId, @RequestBody Date dataObito, @RequestBody String causaObito) {
+    public ResponseEntity<?> obitoPaciente(@PathVariable Long prontuarioId, @RequestBody Date dataObito, String causaObito) {
         try{
             prontuarioService.altaPaciente(prontuarioId, causaObito, dataObito);
             return new ResponseEntity<>("Registro de óbito realizado com sucesso!", HttpStatus.OK);

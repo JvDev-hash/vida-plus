@@ -204,6 +204,35 @@ Retorna uma lista paginada de profissionais cadastrados.
 }
 ```
 
+#### Buscar Profissional por ID
+
+Retorna os dados de um profissional específico.
+
+**Endpoint:** `GET /pessoas/profissional/{id}`
+
+**Autenticação:** Não requerida
+
+**Path Parameters:**
+- `id`: ID do profissional
+
+**Resposta de Sucesso (200 OK):**
+```json
+{
+  "nome": "Dr. João Silva",
+  "cpf": "123.456.789-00",
+  "telefone": "(11) 98765-4321",
+  "email": "joao.silva@email.com",
+  "dataNascimento": "1985-05-15T00:00:00.000Z",
+  "especialidade": "Cardiologia",
+  "crm": "CRM-SP 123456",
+  "status": "ATIVO"
+}
+```
+
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Profissional não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro interno do servidor
+
 #### Editar Profissional
 
 Atualiza os dados de um profissional existente.
@@ -304,6 +333,35 @@ Retorna uma lista paginada de pacientes cadastrados.
   "currentPage": 0
 }
 ```
+
+#### Buscar Paciente por ID
+
+Retorna os dados de um paciente específico.
+
+**Endpoint:** `GET /pessoas/paciente/{id}`
+
+**Autenticação:** Não requerida
+
+**Path Parameters:**
+- `id`: ID do paciente
+
+**Resposta de Sucesso (200 OK):**
+```json
+{
+  "nome": "João Silva",
+  "cpf": "123.456.789-00",
+  "telefone": "(11) 98765-4321",
+  "email": "joao.silva@email.com",
+  "dataNascimento": "1985-05-15T00:00:00.000Z",
+  "sexo": "Masculino",
+  "escolaridade": "Superior Completo",
+  "ocupacao": "Engenheiro"
+}
+```
+
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Paciente não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro interno do servidor
 
 #### Editar Paciente
 
@@ -496,3 +554,242 @@ Atualiza os dados de um suprimento existente.
 **Respostas de Erro:**
 - `404 NOT_FOUND`: Suprimento não encontrado
 - `500 INTERNAL_SERVER_ERROR`: Erro ao atualizar suprimento
+
+---
+
+### Prontuário
+
+#### Admissão de Paciente
+
+Cria um novo prontuário e registra a admissão de um paciente.
+
+**Endpoint:** `POST /prontuario/admissao`
+
+**Autenticação:** Requerida (permissão diferente de VIEW)
+
+**Body:**
+```json
+{
+  "dataAdmissao": "2024-01-15T10:00:00.000Z",
+  "motivoAdmissao": "Dor abdominal intensa",
+  "diagnostico": "Apendicite aguda",
+  "historicoMedico": "Paciente sem histórico de cirurgias",
+  "evolucao": "Paciente em observação",
+  "encaminhamento": "Aguardando avaliação cirúrgica",
+  "conduta": "Repouso e medicação analgésica",
+  "pacienteId": 1,
+  "profissionalId": 1
+}
+```
+
+**Resposta de Sucesso (201 CREATED):**
+```
+"Paciente admisso com sucesso!"
+```
+
+**Respostas de Erro:**
+- `500 INTERNAL_SERVER_ERROR`: Erro ao realizar admissão
+
+#### Internação de Paciente
+
+Registra a internação de um paciente em um leito.
+
+**Endpoint:** `PUT /prontuario/internacao/{prontuarioId}`
+
+**Autenticação:** Requerida (permissão diferente de VIEW)
+
+**Path Parameters:**
+- `prontuarioId`: ID do prontuário
+
+**Body:**
+```json
+{
+  "dataInternacao": "2024-01-15T14:00:00.000Z",
+  "motivoInternacao": "Necessidade de cirurgia",
+  "leitoId": 5
+}
+```
+
+**Resposta de Sucesso (200 OK):**
+```
+"Paciente internado com sucesso!"
+```
+
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Prontuário não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro ao internar paciente
+
+#### Editar Prontuário
+
+Atualiza os dados de um prontuário existente.
+
+**Endpoint:** `PUT /prontuario/editar/{prontuarioId}`
+
+**Autenticação:** Requerida (permissão diferente de VIEW)
+
+**Path Parameters:**
+- `prontuarioId`: ID do prontuário a ser editado
+
+**Body:** Mesmo formato da admissão
+
+**Resposta de Sucesso (200 OK):**
+```
+"Prontuario editado com sucesso!"
+```
+
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Prontuário não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro ao editar prontuário
+
+#### Alta de Paciente
+
+Registra a alta de um paciente.
+
+**Endpoint:** `PUT /prontuario/alta/{prontuarioId}`
+
+**Autenticação:** Requerida (permissão diferente de VIEW)
+
+**Path Parameters:**
+- `prontuarioId`: ID do prontuário
+
+**Body:**
+```json
+{
+  "dataAlta": "2024-01-20T10:00:00.000Z",
+  "motivoAlta": "Alta médica após recuperação cirúrgica"
+}
+```
+
+**Resposta de Sucesso (200 OK):**
+```
+"Paciente dado de alta com sucesso!"
+```
+
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Prontuário não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro ao registrar alta
+
+#### Registro de Óbito
+
+Registra o óbito de um paciente.
+
+**Endpoint:** `PUT /prontuario/obito/{prontuarioId}`
+
+**Autenticação:** Requerida (permissão diferente de VIEW)
+
+**Path Parameters:**
+- `prontuarioId`: ID do prontuário
+
+**Body:**
+```json
+{
+  "dataObito": "2024-01-18T08:00:00.000Z",
+  "causaObito": "Complicações pós-operatórias"
+}
+```
+
+**Resposta de Sucesso (200 OK):**
+```
+"Registro de óbito realizado com sucesso!"
+```
+
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Prontuário não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro ao registrar óbito
+
+#### Transferir Paciente
+
+Transfere um paciente para outro leito.
+
+**Endpoint:** `PUT /prontuario/transferir/{prontuarioId}`
+
+**Autenticação:** Requerida (permissão diferente de VIEW)
+
+**Path Parameters:**
+- `prontuarioId`: ID do prontuário
+
+**Body:**
+```json
+{
+  "leitoId": 10
+}
+```
+
+**Resposta de Sucesso (200 OK):**
+```
+"Paciente transferido com sucesso!"
+```
+
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Prontuário não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro ao transferir paciente
+
+#### Listar Prontuários
+
+Retorna uma lista paginada de prontuários cadastrados.
+
+**Endpoint:** `GET /prontuario/listar`
+
+**Autenticação:** Não requerida
+
+**Query Parameters:**
+- `pageNo` (opcional, padrão: 0): Número da página
+- `pageSize` (opcional, padrão: 10): Tamanho da página
+
+**Resposta de Sucesso (200 OK):**
+```json
+{
+  "content": [
+    {
+      "numeroProntuario": "PRT-2024-0001",
+      "dataAdmissao": "2024-01-15T10:00:00.000Z",
+      "motivoAdmissao": "Dor abdominal intensa",
+      "diagnostico": "Apendicite aguda",
+      "historicoMedico": "Paciente sem histórico de cirurgias",
+      "evolucao": "Paciente em observação",
+      "encaminhamento": "Aguardando avaliação cirúrgica",
+      "conduta": "Repouso e medicação analgésica",
+      "dataInternacao": "2024-01-15T14:00:00.000Z",
+      "dataAlta": null,
+      "motivoInternacao": "Necessidade de cirurgia",
+      "motivoAlta": null,
+      "dataObito": null,
+      "causaObito": null,
+      "leito": {
+        "id": 5,
+        "numero": "101",
+        "descricao": "CAMA 15CM",
+        "tipo": "CAMA",
+        "alaMedica": "ENFERMARIA",
+        "status": "OCUPADO"
+      },
+      "paciente": {
+        "nome": "João Silva",
+        "cpf": "123.456.789-00",
+        "telefone": "(11) 98765-4321",
+        "email": "joao.silva@email.com",
+        "dataNascimento": "1985-05-15T00:00:00.000Z",
+        "sexo": "Masculino",
+        "escolaridade": "Superior Completo",
+        "ocupacao": "Engenheiro"
+      },
+      "profissional": {
+        "nome": "Dr. João Silva",
+        "cpf": "123.456.789-00",
+        "telefone": "(11) 98765-4321",
+        "email": "joao.silva@email.com",
+        "dataNascimento": "1985-05-15T00:00:00.000Z",
+        "especialidade": "Cardiologia",
+        "crm": "CRM-SP 123456",
+        "status": "ATIVO"
+      }
+    }
+  ],
+  "totalElements": 15,
+  "totalPages": 2,
+  "currentPage": 0
+}
+```
+
+**Respostas de Erro:**
+- `500 INTERNAL_SERVER_ERROR`: Erro ao listar prontuários

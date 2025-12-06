@@ -1,19 +1,18 @@
-package vidaplus.project.DTO;
+package vidaplus.project.DTO.ResponseDTO;
 
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
-public class PacienteResponseDTO {
+public class ProfissionalResponseDTO {
     private String nome;
     private String cpf;
     private String telefone;
     private String email;
     private Date dataNascimento;
-    private String sexo;
-    private String escolaridade;
-    private String ocupacao;
-    
+    private String especialidade;
+    private String crm;
+    private String status;
 }
