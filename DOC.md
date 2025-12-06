@@ -397,7 +397,7 @@ Cria um novo leito no sistema.
 
 **Autenticação:** Requerida (permissão diferente de VIEW)
 
-**Body:**
+**Body (LeitoDTO):**
 ```json
 {
   "numero": "101",
@@ -446,7 +446,16 @@ Atualiza os dados de um leito existente.
 **Path Parameters:**
 - `leitoId`: ID do leito a ser editado
 
-**Body:** Mesmo formato do cadastro
+**Body (LeitoDTO):** Mesmo formato do cadastro
+```json
+{
+  "numero": "101",
+  "descricao": "CAMA 15CM",
+  "tipo": "CAMA",
+  "alaMedica": "ENFERMARIA",
+  "status": "DISPONIVEL"
+}
+```
 
 **Resposta de Sucesso (200 OK):**
 ```
@@ -567,7 +576,7 @@ Cria um novo prontuário e registra a admissão de um paciente.
 
 **Autenticação:** Requerida (permissão diferente de VIEW)
 
-**Body:**
+**Body (ProntuarioDTO):**
 ```json
 {
   "dataAdmissao": "2024-01-15T10:00:00.000Z",
@@ -601,7 +610,7 @@ Registra a internação de um paciente em um leito.
 **Path Parameters:**
 - `prontuarioId`: ID do prontuário
 
-**Body:**
+**Body (InternacaoPacienteDTO):**
 ```json
 {
   "dataInternacao": "2024-01-15T14:00:00.000Z",
@@ -630,7 +639,20 @@ Atualiza os dados de um prontuário existente.
 **Path Parameters:**
 - `prontuarioId`: ID do prontuário a ser editado
 
-**Body:** Mesmo formato da admissão
+**Body (ProntuarioDTO):** Mesmo formato da admissão
+```json
+{
+  "dataAdmissao": "2024-01-15T10:00:00.000Z",
+  "motivoAdmissao": "Dor abdominal intensa",
+  "diagnostico": "Apendicite aguda",
+  "historicoMedico": "Paciente sem histórico de cirurgias",
+  "evolucao": "Paciente em observação",
+  "encaminhamento": "Aguardando avaliação cirúrgica",
+  "conduta": "Repouso e medicação analgésica",
+  "pacienteId": 1,
+  "profissionalId": 1
+}
+```
 
 **Resposta de Sucesso (200 OK):**
 ```
@@ -652,7 +674,7 @@ Registra a alta de um paciente.
 **Path Parameters:**
 - `prontuarioId`: ID do prontuário
 
-**Body:**
+**Body (AltaPacienteDTO):**
 ```json
 {
   "dataAlta": "2024-01-20T10:00:00.000Z",
@@ -680,7 +702,7 @@ Registra o óbito de um paciente.
 **Path Parameters:**
 - `prontuarioId`: ID do prontuário
 
-**Body:**
+**Body (ObitoPacienteDTO):**
 ```json
 {
   "dataObito": "2024-01-18T08:00:00.000Z",
@@ -710,10 +732,10 @@ Transfere um paciente para outro leito.
 
 **Body:**
 ```json
-{
-  "leitoId": 10
-}
+10
 ```
+
+**Nota:** O body deve conter apenas o ID do leito (Long) para onde o paciente será transferido.
 
 **Resposta de Sucesso (200 OK):**
 ```
