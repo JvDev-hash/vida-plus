@@ -75,7 +75,22 @@ public class UsuarioController {
             } else {
             return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletarUsuario(@PathVariable("id") Long id) {
+        try{
+            usuarioService.deletarUsuario(id);
+            return new ResponseEntity<>("Usuario deletado com sucesso!", HttpStatus.OK);
+        } catch (Exception e) {
+            if(e.getClass().getName().equals("jakarta.persistence.EntityNotFoundException")) {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+        
     }
 }
 

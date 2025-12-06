@@ -2,6 +2,7 @@ package vidaplus.project.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -97,6 +98,21 @@ public class PessoasController {
         }
     }
 
+    @DeleteMapping("/profissional/{id}")
+    public ResponseEntity<?> deletarProfissional(@PathVariable Long id) {
+        try{
+            pessoasService.deletarProfissional(id);
+            return new ResponseEntity<>("Profissional deletado com sucesso!", HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            if (e.getClass().getName().equals("jakarta.persistence.EntityNotFoundException")) {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+
     @PostMapping("/paciente")
     public ResponseEntity<?> cadastrarPaciente(@RequestBody PacienteDTO pacienteDTO) {
         try {
@@ -143,6 +159,21 @@ public class PessoasController {
         try {
             var paciente = pessoasService.buscarPacientePorId(id);
             return new ResponseEntity<>(paciente, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            if (e.getClass().getName().equals("jakarta.persistence.EntityNotFoundException")) {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+
+    @DeleteMapping("/paciente/{id}")
+    public ResponseEntity<?> deletarPaciente(@PathVariable Long id) {
+        try{
+            pessoasService.deletarPaciente(id);
+            return new ResponseEntity<>("Paciente deletado com sucesso!", HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
             if (e.getClass().getName().equals("jakarta.persistence.EntityNotFoundException")) {

@@ -108,6 +108,12 @@ public class PessoasService {
         return profissional;
     }
 
+    public void deletarProfissional(Long id) {
+        var profissional = profissionalRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Profissional não encontrado"));
+        profissionalRepository.delete(profissional);
+    }
+
     // Pacientes
 
     public void cadastrarPaciente(PacienteDTO pacienteDTO) {
@@ -173,6 +179,12 @@ public class PessoasService {
         var paciente = pacienteRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado"));
         return paciente;
+    }
+
+    public void deletarPaciente(Long id) {
+        var paciente = pacienteRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado"));
+        pacienteRepository.delete(paciente);
     }
     
 }

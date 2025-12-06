@@ -142,6 +142,26 @@ Inativa um usuário no sistema.
 - `404 NOT_FOUND`: Usuário não encontrado
 - `500 INTERNAL_SERVER_ERROR`: Erro ao inativar usuário
 
+#### Deletar Usuário
+
+Remove um usuário do sistema.
+
+**Endpoint:** `DELETE /usuarios/{id}`
+
+**Autenticação:** Requerida (permissão diferente de VIEW)
+
+**Path Parameters:**
+- `id`: ID do usuário a ser deletado
+
+**Resposta de Sucesso (200 OK):**
+```
+"Usuario deletado com sucesso!"
+```
+
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Usuário não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro ao deletar usuário
+
 ---
 
 ### Pessoas
@@ -276,6 +296,30 @@ Altera o status de um profissional.
 "Profissional status mudado com sucesso!"
 ```
 
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Profissional não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro ao mudar status
+
+#### Deletar Profissional
+
+Remove um profissional do sistema.
+
+**Endpoint:** `DELETE /pessoas/profissional/{id}`
+
+**Autenticação:** Requerida (permissão diferente de VIEW)
+
+**Path Parameters:**
+- `id`: ID do profissional a ser deletado
+
+**Resposta de Sucesso (200 OK):**
+```
+"Profissional deletado com sucesso!"
+```
+
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Profissional não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro ao deletar profissional
+
 #### Cadastrar Paciente
 
 Cria um novo paciente no sistema.
@@ -384,6 +428,26 @@ Atualiza os dados de um paciente existente.
 **Respostas de Erro:**
 - `404 NOT_FOUND`: Paciente não encontrado
 - `500 INTERNAL_SERVER_ERROR`: Erro ao atualizar paciente
+
+#### Deletar Paciente
+
+Remove um paciente do sistema.
+
+**Endpoint:** `DELETE /pessoas/paciente/{id}`
+
+**Autenticação:** Requerida (permissão diferente de VIEW)
+
+**Path Parameters:**
+- `id`: ID do paciente a ser deletado
+
+**Resposta de Sucesso (200 OK):**
+```
+"Paciente deletado com sucesso!"
+```
+
+**Respostas de Erro:**
+- `404 NOT_FOUND`: Paciente não encontrado
+- `500 INTERNAL_SERVER_ERROR`: Erro ao deletar paciente
 
 ---
 

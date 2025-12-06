@@ -58,5 +58,9 @@ public class UsuarioService {
         Page<Usuario> usuarios = usuarioRepository.findAll(pageable);
         return new PageImpl<>(usuarios.getContent(), pageable, usuarios.getTotalElements());
     }
-    
+
+    public void deletarUsuario(Long id) {
+        var usuario = usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuario não encontrado"));
+        usuarioRepository.delete(usuario);
+    }
 }
