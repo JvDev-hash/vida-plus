@@ -1,8 +1,11 @@
 package vidaplus.project.service;
 
 import vidaplus.project.DTO.ProfissionalDTO;
+import vidaplus.project.DTO.ProfissionalResponseDTO;
 import vidaplus.project.model.Endereco;
 import vidaplus.project.model.Profissional;
+
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,6 +18,7 @@ import vidaplus.project.repository.ProfissionalRepository;
 import vidaplus.project.repository.EnderecoRepository;
 import vidaplus.project.repository.PacienteRepository;
 import vidaplus.project.DTO.PacienteDTO;
+import vidaplus.project.DTO.PacienteResponseDTO;
 import vidaplus.project.model.Paciente;
 
 @Service
@@ -90,10 +94,18 @@ public class PessoasService {
         profissionalRepository.save(profissional);
     }
 
-    public Page<Profissional> listarProfissionais(int pageNo, int pageSize) {
+    public Page<ProfissionalResponseDTO> listarProfissionais(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, "profissionalId"));
         Page<Profissional> profissionais = profissionalRepository.findAll(pageable);
-        return new PageImpl<>(profissionais.getContent(), pageable, profissionais.getTotalElements());
+        return new PageImpl<>(profissionais.getContent().stream()
+        .map(profissional -> new ProfissionalResponseDTO(profissional.getNome(), profissional.getCpf(), profissional.getTelefone(), profissional.getEmail(), profissional.getDataNascimento(), profissional.getEspecialidade(), profissional.getCrm(), profissional.getStatus()))
+        .collect(Collectors.toList()), pageable, profissionais.getTotalElements());
+    }
+
+    public Profissional buscarProfissionalPorId(Long id) {
+        var profissional = profissionalRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Profissional não encontrado"));
+        return profissional;
     }
 
     // Pacientes
@@ -149,10 +161,18 @@ public class PessoasService {
         pacienteRepository.save(paciente);
     }
     
-    public Page<Paciente> listarPacientes(int pageNo, int pageSize) {
+    public Page<PacienteResponseDTO> listarPacientes(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, "pacienteId"));
         Page<Paciente> pacientes = pacienteRepository.findAll(pageable);
-        return new PageImpl<>(pacientes.getContent(), pageable, pacientes.getTotalElements());
+        return new PageImpl<>(pacientes.getContent().stream()
+        .map(paciente -> new PacienteResponseDTO(paciente.getNome(), paciente.getCpf(), paciente.getTelefone(), paciente.getEmail(), paciente.getDataNascimento(), paciente.getSexo(), paciente.getEscolaridade(), paciente.getOcupacao()))
+        .collect(Collectors.toList()), pageable, pacientes.getTotalElements());
+    }
+
+    public Paciente buscarPacientePorId(Long id) {
+        var paciente = pacienteRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Paciente não encontrado"));
+        return paciente;
     }
     
 }

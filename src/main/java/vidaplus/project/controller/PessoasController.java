@@ -116,8 +116,26 @@ public class PessoasController {
             return new ResponseEntity<>(pacientes, HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());
-            return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
+            if (e.getClass().getName().equals("jakarta.persistence.EntityNotFoundException")) {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
     }
-    
+
+    @GetMapping("/paciente/{id}")
+    public ResponseEntity<?> buscarPacientePorId(@PathVariable Long id) {
+        try {
+            var paciente = pessoasService.buscarPacientePorId(id);
+            return new ResponseEntity<>(paciente, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            if (e.getClass().getName().equals("jakarta.persistence.EntityNotFoundException")) {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(e.getMessage().getBytes(StandardCharsets.UTF_8), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
 }

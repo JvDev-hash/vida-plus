@@ -2,6 +2,7 @@ package vidaplus.project.service;
 
 import java.util.Date;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -14,7 +15,12 @@ import vidaplus.project.repository.ProntuarioRepository;
 import vidaplus.project.repository.PacienteRepository;
 import vidaplus.project.repository.ProfissionalRepository;
 import vidaplus.project.DTO.ProntuarioDTO;
+import vidaplus.project.DTO.ProntuarioResponseDTO;
+import vidaplus.project.DTO.PacienteResponseDTO;
+import vidaplus.project.DTO.ProfissionalResponseDTO;
 import vidaplus.project.model.Prontuario;
+import vidaplus.project.model.Paciente;
+import vidaplus.project.model.Profissional;
 import vidaplus.project.repository.LeitosRepository;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -105,9 +111,65 @@ public class ProntuarioService {
         prontuarioRepository.save(prontuario);
     }
 
-    public Page<Prontuario> listarProntuarios(int pageNo, int pageSize) {
+    public Page<ProntuarioResponseDTO> listarProntuarios(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, "prontuarioId"));
         Page<Prontuario> prontuarios = prontuarioRepository.findAll(pageable);
-        return new PageImpl<>(prontuarios.getContent(), pageable, prontuarios.getTotalElements());
+        
+        return new PageImpl<>(
+            prontuarios.getContent().stream()
+                .map(prontuario -> {
+                    PacienteResponseDTO pacienteDTO = mapToPacienteResponseDTO(prontuario.getPaciente());
+                    ProfissionalResponseDTO profissionalDTO = mapToProfissionalResponseDTO(prontuario.getProfissional());
+                    
+                    return new ProntuarioResponseDTO(
+                        prontuario.getNumeroProntuario(),
+                        prontuario.getDataAdmissao(),
+                        prontuario.getMotivoAdmissao(),
+                        prontuario.getDiagnostico(),
+                        prontuario.getHistoricoMedico(),
+                        prontuario.getEvolucao(),
+                        prontuario.getEncaminhamento(),
+                        prontuario.getConduta(),
+                        prontuario.getDataInternacao(),
+                        prontuario.getDataAlta(),
+                        prontuario.getMotivoInternacao(),
+                        prontuario.getMotivoAlta(),
+                        prontuario.getDataObito(),
+                        prontuario.getCausaObito(),
+                        prontuario.getLeito(),
+                        pacienteDTO,
+                        profissionalDTO
+                    );
+                })
+                .collect(Collectors.toList()),
+            pageable,
+            prontuarios.getTotalElements()
+        );
+    }
+
+    private PacienteResponseDTO mapToPacienteResponseDTO(Paciente paciente) {
+        return new PacienteResponseDTO(
+            paciente.getNome(),
+            paciente.getCpf(),
+            paciente.getTelefone(),
+            paciente.getEmail(),
+            paciente.getDataNascimento(),
+            paciente.getSexo(),
+            paciente.getEscolaridade(),
+            paciente.getOcupacao()
+        );
+    }
+
+    private ProfissionalResponseDTO mapToProfissionalResponseDTO(Profissional profissional) {
+        return new ProfissionalResponseDTO(
+            profissional.getNome(),
+            profissional.getCpf(),
+            profissional.getTelefone(),
+            profissional.getEmail(),
+            profissional.getDataNascimento(),
+            profissional.getEspecialidade(),
+            profissional.getCrm(),
+            profissional.getStatus()
+        );
     }
 }
