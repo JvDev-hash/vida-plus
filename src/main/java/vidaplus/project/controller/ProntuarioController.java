@@ -1,6 +1,7 @@
 package vidaplus.project.controller;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,9 +106,10 @@ public class ProntuarioController {
     }
 
     @PutMapping("/transferir/{prontuarioId}")
-    public ResponseEntity<?> transferirPaciente(@PathVariable Long prontuarioId, @RequestBody Long leitoId) {
+    public ResponseEntity<?> transferirPaciente(@PathVariable Long prontuarioId, @RequestBody Map<String, Object> requestBody) {
         try{
-            prontuarioService.transferirPaciente(prontuarioId, leitoId);
+            var leitoIdObj = requestBody.get("leitoId");
+            prontuarioService.transferirPaciente(prontuarioId, Long.parseLong(leitoIdObj.toString()));
             return new ResponseEntity<>("Paciente transferido com sucesso!", HttpStatus.OK);
         } catch (Exception e) {
             logger.error(e.getMessage());

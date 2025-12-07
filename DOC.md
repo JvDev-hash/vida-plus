@@ -796,10 +796,12 @@ Transfere um paciente para outro leito.
 
 **Body:**
 ```json
-10
+{
+  "leitoId": 10
+}
 ```
 
-**Nota:** O body deve conter apenas o ID do leito (Long) para onde o paciente será transferido.
+**Nota:** O body deve conter um objeto JSON com a propriedade `leitoId` (Long) indicando o ID do leito para onde o paciente será transferido.
 
 **Resposta de Sucesso (200 OK):**
 ```
